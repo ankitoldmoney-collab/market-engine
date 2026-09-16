@@ -36,18 +36,18 @@
         --glow-top-opacity: 0.14;
       }
 
-      * { box-sizing: border-box; }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
       html { min-height: 100%; }
 
       body {
         min-height: 100vh;
-        margin: 0;
         color: var(--white);
         background:
           radial-gradient(circle at 50% 10%, rgba(82, 82, 82, .2), transparent 31%),
           linear-gradient(160deg, #111315 0%, #050505 45%, #101113 100%);
         font-family: "Inter", system-ui, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
+        position: relative;
       }
 
       body::before {
@@ -58,6 +58,7 @@
         opacity: .16;
         background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
         background-size: 34px 34px;
+        z-index: 1;
       }
 
       .landing-shell {
@@ -66,6 +67,8 @@
         display: grid;
         place-items: center;
         padding: 28px 16px;
+        position: relative;
+        z-index: 2;
       }
 
       .poster {
@@ -252,9 +255,13 @@
         line-height: 1.5;
       }
 
-      .bot-trap {
-        display: none;
-        visibility: hidden;
+      /* Hidden Honeypot Styling */
+      .bot-field {
+        position: absolute !important;
+        left: -9999px !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
       }
 
       .toast {
@@ -292,8 +299,9 @@
     </style>
   </head>
   <body>
-    <!-- Honeypot Bot Trap -->
-    <input type="text" name="website_hp" id="bot-honeypot" class="bot-trap" tabindex="-1" autocomplete="off" />
+    <!-- Advanced Multi-Honeypot Shield -->
+    <input type="text" name="website_hp" id="bot-honeypot" class="bot-field" tabindex="-1" autocomplete="off" />
+    <input type="email" name="user_email_hp" id="bot-email-hp" class="bot-field" tabindex="-1" autocomplete="off" />
 
     <main class="landing-shell">
       <article class="poster">
@@ -382,72 +390,112 @@
         }, 7000);
       })();
 
-      // 3. Complete Anti-Fake-Click Protection Suite
-      (function initAntiFakeClick() {
+      // 3. Complete High-Percentage Anti-Fake-Click & Bot Shield
+      (function initAdvanceAntiFakeClick() {
         const ctaBtn = document.getElementById('cta-button');
         const ctaText = document.getElementById('cta-text');
-        const honeypot = document.getElementById('bot-honeypot');
+        const hp1 = document.getElementById('bot-honeypot');
+        const hp2 = document.getElementById('bot-email-hp');
 
         let lastClickTime = 0;
-        let userMovedMouse = false;
-        const MAX_CLICKS_PER_SESSION = 5;
-        const COOLDOWN_MS = 1500;
+        let humanInteraction = false;
+        let pageStartTime = Date.now();
 
-        window.addEventListener('mousemove', function onFirstMove() {
-          userMovedMouse = true;
-          window.removeEventListener('mousemove', onFirstMove);
-        });
+        // Unique Fingerprint Token for Current Session
+        const sessionToken = "token_" + Math.random().toString(36).substring(2) + Date.now();
+        
+        // Track Real Human Activity
+        window.addEventListener('mousemove', () => { humanInteraction = true; }, { passive: true, once: true });
+        window.addEventListener('touchstart', () => { humanInteraction = true; }, { passive: true, once: true });
+        window.addEventListener('scroll', () => { humanInteraction = true; }, { passive: true, once: true });
+
+        // Advanced Automated Headless Environment Detector
+        function detectBotEnvironment() {
+          const nav = navigator;
+          const win = window;
+
+          if (nav.webdriver) return true; // Direct Selenium/Puppeteer check
+          if (win.callPhantom || win._phantom || win.__nightmare) return true; // Headless patterns
+          if (win.domAutomation || win.domAutomationController) return true;
+          
+          // Pattern Check for Headless Browsers
+          if (/HeadlessChrome/.test(nav.userAgent)) return true;
+
+          // Honeypot Inspection
+          if ((hp1 && hp1.value !== "") || (hp2 && hp2.value !== "")) return true;
+
+          return false;
+        }
 
         ctaBtn.addEventListener('click', function(e) {
           const now = Date.now();
+          const durationOnPage = now - pageStartTime;
 
-          if (honeypot && honeypot.value !== "") {
+          // 1. Block Automated Shields (Headless & WebDriver Detection)
+          if (detectBotEnvironment()) {
             e.preventDefault();
+            console.warn("Fake Click Prevented: Bot Shields Active");
             return false;
           }
 
+          // 2. Event Authenticity Verification
           if (!e.isTrusted) {
             e.preventDefault();
+            console.warn("Fake Click Prevented: Untrusted Event");
             return false;
           }
 
-          if (window.innerWidth > 768 && !userMovedMouse && e.clientX === 0 && e.clientY === 0) {
+          // 3. Ultra-Fast Click Protection (Click within 400ms is bot pattern)
+          if (durationOnPage < 400) {
+            e.preventDefault();
+            console.warn("Fake Click Prevented: Instant Click Anomaly");
+            return false;
+          }
+
+          // 4. Zero Human Interaction Check (Bypasses naive scripted direct clicks)
+          if (window.innerWidth > 768 && !humanInteraction && e.clientX === 0 && e.clientY === 0) {
+            e.preventDefault();
+            console.warn("Fake Click Prevented: No Prior Interaction");
+            return false;
+          }
+
+          // 5. Throttling/Cooldown (1.6 seconds delay between consecutive clicks)
+          if (now - lastClickTime < 1600) {
             e.preventDefault();
             return false;
           }
 
-          if (now - lastClickTime < COOLDOWN_MS) {
+          // 6. STRICT Session Rate Limiting (Unique Limit per Session)
+          let sessionClicks = parseInt(sessionStorage.getItem('shadow_click_limit') || '0', 10);
+          if (sessionClicks >= 4) {
             e.preventDefault();
-            return false;
-          }
-
-          let sessionClicks = parseInt(sessionStorage.getItem('user_click_count') || '0', 10);
-          if (sessionClicks >= MAX_CLICKS_PER_SESSION) {
-            e.preventDefault();
-            alert("Rate limit exceeded! Please wait before attempting again.");
+            alert("VIP access limit reached for this session. Please try again later.");
             ctaBtn.classList.add('btn-disabled');
-            ctaText.textContent = "PLEASE WAIT...";
+            ctaText.textContent = "ACCESS LIMITED";
             return false;
           }
 
-          // Trigger Meta Pixel Click Event before redirection
+          // TRIGGER META PIXEL CONVERSION EVENT (Valid human only)
           if (typeof fbq === 'function') {
-            fbq('track', 'Lead');
+            fbq('track', 'Lead', {
+              session_token: sessionToken,
+              verified_human: true
+            });
           }
 
           lastClickTime = now;
           sessionClicks += 1;
-          sessionStorage.setItem('user_click_count', sessionClicks);
+          sessionStorage.setItem('shadow_click_limit', sessionClicks);
 
           ctaBtn.classList.add('btn-disabled');
           ctaText.textContent = "REDIRECTING...";
 
           setTimeout(() => {
-            if (sessionClicks < MAX_CLICKS_PER_SESSION) {
+            if (sessionClicks < 4) {
               ctaBtn.classList.remove('btn-disabled');
               ctaText.textContent = "JOIN TELEGRAM NOW";
             }
-          }, COOLDOWN_MS);
+          }, 1600);
         });
       })();
     </script>
