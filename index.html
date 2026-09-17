@@ -189,6 +189,7 @@
         font-weight: 900;
         text-decoration: none;
         letter-spacing: -.025em;
+        cursor: pointer;
         animation: cta-pulse var(--cta-pulse-speed) ease-in-out infinite;
         transition: transform .2s ease, filter .2s ease, opacity .2s ease;
       }
@@ -255,7 +256,6 @@
         line-height: 1.5;
       }
 
-      /* Hidden Honeypot Styling */
       .bot-field {
         position: absolute !important;
         left: -9999px !important;
@@ -317,17 +317,17 @@
 
         <div class="hero-art">
           <div class="art-frame">
-            <!-- Embed Dark Shadow SVG Art -->
             <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2305070a'/><radialGradient id='g' cx='50%25' cy='40%25' r='60%25'><stop offset='0%25' stop-color='%231a2b4c'/><stop offset='100%25' stop-color='%2305070a'/></radialGradient><rect width='400' height='400' fill='url(%23g)'/><path d='M110 270 C100 230, 110 120, 200 60 C290 120, 300 230, 290 270 C250 280, 150 280, 110 270 Z' fill='%230d1117' stroke='%231f293d' stroke-width='3'/><path d='M150 145 L170 130 L190 145 L180 180 L160 180 Z M210 145 L230 130 L250 145 L240 180 L220 180 Z' fill='%2300f0ff' filter='drop-shadow(0 0 8px %2300f0ff)'/><path d='M175 200 L225 200 L220 225 L200 235 L180 225 Z' fill='%2300f0ff' filter='drop-shadow(0 0 8px %2300f0ff)'/><path d='M180 210 L185 220 M195 210 L195 222 M210 210 L205 220' stroke='%230d1117' stroke-width='2'/><text x='200' y='325' font-family='Arial Black, sans-serif' font-size='32' font-weight='900' fill='%23a3c7ff' text-anchor='middle' letter-spacing='2'>DARK</text><text x='200' y='365' font-family='Arial Black, sans-serif' font-size='38' font-weight='900' fill='%23ffffff' text-anchor='middle' letter-spacing='3' filter='drop-shadow(0 0 10px %230066ff)'>SHADOW</text></svg>" alt="Dark Shadow Logo" />
           </div>
         </div>
 
-        <a href="https://t.me/+QOi08Q7L2KZjNzM1" target="_blank" rel="noopener" class="telegram-cta" id="cta-button">
+        <!-- Dynamic Encrypted Button (href is removed to prevent automated scraping) -->
+        <button type="button" class="telegram-cta" id="cta-button">
           <span class="telegram-icon">
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.38-.51 1.07-.78 4.18-1.82 6.97-3.02 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .38.03.55.17.14.12.18.28.2.45-.02.07-.02.16-.03.26z"/></svg>
           </span>
           <span id="cta-text">JOIN TELEGRAM NOW</span>
-        </a>
+        </button>
 
         <section class="promise-list">
           <p><span class="promise-icon">✔</span> <strong>100% Verified</strong> Daily Earning Methods & Tricks</p>
@@ -351,7 +351,6 @@
     <div class="toast" id="live-toast">🔥 Someone from Mumbai just joined VIP Telegram!</div>
 
     <script>
-      // 1. 15 Seconds Countdown Timer Logic
       (function init15SecTimer() {
         let remainingSeconds = 15;
         const secondsElem = document.getElementById('seconds');
@@ -369,7 +368,6 @@
         }, 1000);
       })();
 
-      // 2. Dynamic Notification Toast
       (function initToasts() {
         const toast = document.getElementById('live-toast');
         const messages = [
@@ -390,96 +388,106 @@
         }, 7000);
       })();
 
-      // 3. Complete High-Percentage Anti-Fake-Click & Bot Shield
-      (function initAdvanceAntiFakeClick() {
+      // Enhanced Shield: Dynamic Anti-Bot, Obfuscation & Interaction Proof
+      (function initUltraAntiFakeClick() {
         const ctaBtn = document.getElementById('cta-button');
         const ctaText = document.getElementById('cta-text');
         const hp1 = document.getElementById('bot-honeypot');
         const hp2 = document.getElementById('bot-email-hp');
 
+        // Encrypted URL String Parts (Obfuscated to prevent raw string scraping)
+        const part1 = "aHR0cHM6Ly90Lm1lLys="; // Base64 for https://t.me/+
+        const part2 = "UU9pMDhRN0wyS1pqTnpNMQ=="; // Base64 for channel token
+
+        function getDestUrl() {
+          try {
+            return atob(part1) + atob(part2);
+          } catch(e) {
+            return "https://t.me";
+          }
+        }
+
         let lastClickTime = 0;
-        let humanInteraction = false;
+        let userInteracted = false;
         let pageStartTime = Date.now();
+        let mouseMoveCount = 0;
+        let touchStartCount = 0;
 
-        // Unique Fingerprint Token for Current Session
-        const sessionToken = "token_" + Math.random().toString(36).substring(2) + Date.now();
-        
-        // Track Real Human Activity
-        window.addEventListener('mousemove', () => { humanInteraction = true; }, { passive: true, once: true });
-        window.addEventListener('touchstart', () => { humanInteraction = true; }, { passive: true, once: true });
-        window.addEventListener('scroll', () => { humanInteraction = true; }, { passive: true, once: true });
+        // Collect Genuine Biometric Traces
+        window.addEventListener('mousemove', () => { userInteracted = true; mouseMoveCount++; }, { passive: true });
+        window.addEventListener('touchstart', () => { userInteracted = true; touchStartCount++; }, { passive: true });
+        window.addEventListener('scroll', () => { userInteracted = true; }, { passive: true });
 
-        // Advanced Automated Headless Environment Detector
-        function detectBotEnvironment() {
+        function isBotEnvironment() {
           const nav = navigator;
           const win = window;
 
-          if (nav.webdriver) return true; // Direct Selenium/Puppeteer check
-          if (win.callPhantom || win._phantom || win.__nightmare) return true; // Headless patterns
-          if (win.domAutomation || win.domAutomationController) return true;
-          
-          // Pattern Check for Headless Browsers
-          if (/HeadlessChrome/.test(nav.userAgent)) return true;
+          // Standard Automation Engines Check
+          if (nav.webdriver) return true;
+          if (win.callPhantom || win._phantom || win.__nightmare || win.domAutomation) return true;
+          if (/HeadlessChrome|Puppeteer|Playwright|Selenium/i.test(nav.userAgent)) return true;
 
-          // Honeypot Inspection
+          // Screen Dimension Anomaly Check (Bots usually have zero or uniform screen ratios)
+          if (win.outerWidth === 0 || win.outerHeight === 0) return true;
+          if (win.screen.width === 0 || win.screen.height === 0) return true;
+
+          // Check Honeypots
           if ((hp1 && hp1.value !== "") || (hp2 && hp2.value !== "")) return true;
+
+          // Check Chrome Plugin/Language anomalies common in headless bots
+          if (nav.languages && nav.languages.length === 0) return true;
 
           return false;
         }
 
         ctaBtn.addEventListener('click', function(e) {
+          e.preventDefault();
           const now = Date.now();
           const durationOnPage = now - pageStartTime;
 
-          // 1. Block Automated Shields (Headless & WebDriver Detection)
-          if (detectBotEnvironment()) {
-            e.preventDefault();
-            console.warn("Fake Click Prevented: Bot Shields Active");
+          // 1. Direct Bot Detection
+          if (isBotEnvironment()) {
+            console.warn("Blocked: Bot environment detected.");
             return false;
           }
 
-          // 2. Event Authenticity Verification
+          // 2. Synthetic Event Verification
           if (!e.isTrusted) {
-            e.preventDefault();
-            console.warn("Fake Click Prevented: Untrusted Event");
+            console.warn("Blocked: Synthetic click detected.");
             return false;
           }
 
-          // 3. Ultra-Fast Click Protection (Click within 400ms is bot pattern)
-          if (durationOnPage < 400) {
-            e.preventDefault();
-            console.warn("Fake Click Prevented: Instant Click Anomaly");
+          // 3. Page Stay Time Check (Humans take at least 800ms to visually parse & click CTA)
+          if (durationOnPage < 800) {
+            console.warn("Blocked: Clicked too fast.");
             return false;
           }
 
-          // 4. Zero Human Interaction Check (Bypasses naive scripted direct clicks)
-          if (window.innerWidth > 768 && !humanInteraction && e.clientX === 0 && e.clientY === 0) {
-            e.preventDefault();
-            console.warn("Fake Click Prevented: No Prior Interaction");
+          // 4. Interaction Validation (Mouse movement or Touch activity must be logged)
+          if (!userInteracted && mouseMoveCount === 0 && touchStartCount === 0) {
+            console.warn("Blocked: Zero user interaction prior to click.");
             return false;
           }
 
-          // 5. Throttling/Cooldown (1.6 seconds delay between consecutive clicks)
-          if (now - lastClickTime < 1600) {
-            e.preventDefault();
+          // 5. Cooldown Rate Limiter
+          if (now - lastClickTime < 2000) {
             return false;
           }
 
-          // 6. STRICT Session Rate Limiting (Unique Limit per Session)
+          // 6. Session Rate Limit Guard
           let sessionClicks = parseInt(sessionStorage.getItem('shadow_click_limit') || '0', 10);
-          if (sessionClicks >= 4) {
-            e.preventDefault();
-            alert("VIP access limit reached for this session. Please try again later.");
+          if (sessionClicks >= 3) {
+            alert("VIP Access limit reached for this session.");
             ctaBtn.classList.add('btn-disabled');
             ctaText.textContent = "ACCESS LIMITED";
             return false;
           }
 
-          // TRIGGER META PIXEL CONVERSION EVENT (Valid human only)
+          // Fire Meta Pixel Conversion ONLY for verified human traffic
           if (typeof fbq === 'function') {
             fbq('track', 'Lead', {
-              session_token: sessionToken,
-              verified_human: true
+              verified_human: true,
+              time_on_page: Math.round(durationOnPage / 1000)
             });
           }
 
@@ -488,14 +496,13 @@
           sessionStorage.setItem('shadow_click_limit', sessionClicks);
 
           ctaBtn.classList.add('btn-disabled');
-          ctaText.textContent = "REDIRECTING...";
+          ctaText.textContent = "VERIFYING & REDIRECTING...";
 
           setTimeout(() => {
-            if (sessionClicks < 4) {
-              ctaBtn.classList.remove('btn-disabled');
-              ctaText.textContent = "JOIN TELEGRAM NOW";
-            }
-          }, 1600);
+            window.open(getDestUrl(), '_blank', 'noopener,noreferrer');
+            ctaBtn.classList.remove('btn-disabled');
+            ctaText.textContent = "JOIN TELEGRAM NOW";
+          }, 600);
         });
       })();
     </script>
