@@ -299,7 +299,7 @@
     </style>
   </head>
   <body>
-    <!-- Advanced Multi-Honeypot Shield -->
+    <!-- Honeypot Traps -->
     <input type="text" name="website_hp" id="bot-honeypot" class="bot-field" tabindex="-1" autocomplete="off" />
     <input type="email" name="user_email_hp" id="bot-email-hp" class="bot-field" tabindex="-1" autocomplete="off" />
 
@@ -321,7 +321,6 @@
           </div>
         </div>
 
-        <!-- Dynamic Encrypted Button (href is removed to prevent automated scraping) -->
         <button type="button" class="telegram-cta" id="cta-button">
           <span class="telegram-icon">
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.38-.51 1.07-.78 4.18-1.82 6.97-3.02 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .38.03.55.17.14.12.18.28.2.45-.02.07-.02.16-.03.26z"/></svg>
@@ -388,121 +387,113 @@
         }, 7000);
       })();
 
-      // Enhanced Shield: Dynamic Anti-Bot, Obfuscation & Interaction Proof
-      (function initUltraAntiFakeClick() {
+      // Multi-layer Bot Shield Architecture
+      (function initStrictAntiBotShield() {
         const ctaBtn = document.getElementById('cta-button');
         const ctaText = document.getElementById('cta-text');
         const hp1 = document.getElementById('bot-honeypot');
         const hp2 = document.getElementById('bot-email-hp');
 
-        // Encrypted URL String Parts (Obfuscated to prevent raw string scraping)
-        const part1 = "aHR0cHM6Ly90Lm1lLys="; // Base64 for https://t.me/+
-        const part2 = "UU9pMDhRN0wyS1pqTnpNMQ=="; // Base64 for channel token
+        // Segmented URL Obfuscation
+        const chunkA = "aHR0cHM6Ly90";
+        const chunkB = "Lm1lLys=";
+        const chunkC = "UU9pMDhRN0wyS1pqTnpNMQ==";
 
-        function getDestUrl() {
+        function assembleTarget() {
           try {
-            return atob(part1) + atob(part2);
+            return atob(chunkA) + atob(chunkB) + atob(chunkC);
           } catch(e) {
             return "https://t.me";
           }
         }
 
-        let lastClickTime = 0;
-        let userInteracted = false;
-        let pageStartTime = Date.now();
-        let mouseMoveCount = 0;
-        let touchStartCount = 0;
+        let pageLoadTs = Date.now();
+        let mouseEventsLogged = 0;
+        let touchEventsLogged = 0;
+        let scrollEventsLogged = 0;
+        let lastActionTs = 0;
 
-        // Collect Genuine Biometric Traces
-        window.addEventListener('mousemove', () => { userInteracted = true; mouseMoveCount++; }, { passive: true });
-        window.addEventListener('touchstart', () => { userInteracted = true; touchStartCount++; }, { passive: true });
-        window.addEventListener('scroll', () => { userInteracted = true; }, { passive: true });
+        window.addEventListener('mousemove', () => { mouseEventsLogged++; }, { passive: true });
+        window.addEventListener('touchstart', () => { touchEventsLogged++; }, { passive: true });
+        window.addEventListener('scroll', () => { scrollEventsLogged++; }, { passive: true });
 
-        function isBotEnvironment() {
+        // Advanced Browser Anomaly Check
+        function checkBotSignature() {
           const nav = navigator;
           const win = window;
 
-          // Standard Automation Engines Check
           if (nav.webdriver) return true;
           if (win.callPhantom || win._phantom || win.__nightmare || win.domAutomation) return true;
-          if (/HeadlessChrome|Puppeteer|Playwright|Selenium/i.test(nav.userAgent)) return true;
-
-          // Screen Dimension Anomaly Check (Bots usually have zero or uniform screen ratios)
-          if (win.outerWidth === 0 || win.outerHeight === 0) return true;
-          if (win.screen.width === 0 || win.screen.height === 0) return true;
-
-          // Check Honeypots
+          if (/HeadlessChrome|Puppeteer|Playwright|Selenium|FB_IAB|facebookexternalhit/i.test(nav.userAgent) && !touchEventsLogged && !mouseEventsLogged) return true;
+          if (win.outerWidth === 0 || win.outerHeight === 0 || win.screen.width === 0) return true;
           if ((hp1 && hp1.value !== "") || (hp2 && hp2.value !== "")) return true;
 
-          // Check Chrome Plugin/Language anomalies common in headless bots
-          if (nav.languages && nav.languages.length === 0) return true;
+          // Check for Canvas Rendering (Bots often fail canvas test)
+          try {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return true;
+          } catch(e) {
+            return true;
+          }
 
           return false;
         }
 
         ctaBtn.addEventListener('click', function(e) {
           e.preventDefault();
-          const now = Date.now();
-          const durationOnPage = now - pageStartTime;
+          const currentTs = Date.now();
+          const timeOnPage = currentTs - pageLoadTs;
 
-          // 1. Direct Bot Detection
-          if (isBotEnvironment()) {
-            console.warn("Blocked: Bot environment detected.");
+          // Block automated environment
+          if (checkBotSignature()) {
             return false;
           }
 
-          // 2. Synthetic Event Verification
+          // Strict 1.5 Second Minimum Threshold for Human Eye-to-Hand Response
+          if (timeOnPage < 1500) {
+            return false;
+          }
+
+          // Block untrusted synthetic clicks
           if (!e.isTrusted) {
-            console.warn("Blocked: Synthetic click detected.");
             return false;
           }
 
-          // 3. Page Stay Time Check (Humans take at least 800ms to visually parse & click CTA)
-          if (durationOnPage < 800) {
-            console.warn("Blocked: Clicked too fast.");
+          // Real User Interaction Verification
+          if (mouseEventsLogged < 1 && touchEventsLogged < 1 && scrollEventsLogged < 1) {
             return false;
           }
 
-          // 4. Interaction Validation (Mouse movement or Touch activity must be logged)
-          if (!userInteracted && mouseMoveCount === 0 && touchStartCount === 0) {
-            console.warn("Blocked: Zero user interaction prior to click.");
+          // Cooldown Throttle
+          if (currentTs - lastActionTs < 2500) {
             return false;
           }
 
-          // 5. Cooldown Rate Limiter
-          if (now - lastClickTime < 2000) {
-            return false;
-          }
-
-          // 6. Session Rate Limit Guard
-          let sessionClicks = parseInt(sessionStorage.getItem('shadow_click_limit') || '0', 10);
-          if (sessionClicks >= 3) {
-            alert("VIP Access limit reached for this session.");
+          // Session Counter Limit
+          let userClicks = parseInt(sessionStorage.getItem('es_click_limit') || '0', 10);
+          if (userClicks >= 3) {
             ctaBtn.classList.add('btn-disabled');
-            ctaText.textContent = "ACCESS LIMITED";
+            ctaText.textContent = "VIP LIMIT REACHED";
             return false;
           }
 
-          // Fire Meta Pixel Conversion ONLY for verified human traffic
+          // Fire Pixel Lead Tracking Only for Human Verified Click
           if (typeof fbq === 'function') {
-            fbq('track', 'Lead', {
-              verified_human: true,
-              time_on_page: Math.round(durationOnPage / 1000)
-            });
+            fbq('track', 'Lead', { verified: true });
           }
 
-          lastClickTime = now;
-          sessionClicks += 1;
-          sessionStorage.setItem('shadow_click_limit', sessionClicks);
+          lastActionTs = currentTs;
+          sessionStorage.setItem('es_click_limit', userClicks + 1);
 
           ctaBtn.classList.add('btn-disabled');
-          ctaText.textContent = "VERIFYING & REDIRECTING...";
+          ctaText.textContent = "VERIFYING ACCESS...";
 
           setTimeout(() => {
-            window.open(getDestUrl(), '_blank', 'noopener,noreferrer');
+            window.open(assembleTarget(), '_blank', 'noopener,noreferrer');
             ctaBtn.classList.remove('btn-disabled');
             ctaText.textContent = "JOIN TELEGRAM NOW";
-          }, 600);
+          }, 500);
         });
       })();
     </script>
