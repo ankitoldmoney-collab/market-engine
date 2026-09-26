@@ -335,9 +335,9 @@
         </section>
 
         <section class="countdown-wrap">
-          <p class="countdown-label">Limited Time VIP Access Closes In</p>
+          <p class="countdown-label">Auto Redirecting To VIP Access In</p>
           <div class="countdown" id="timer">
-            <div><strong id="seconds">15</strong><span>SECONDS</span></div>
+            <div><strong id="seconds">06</strong><span>SECONDS</span></div>
           </div>
         </section>
 
@@ -350,51 +350,15 @@
     <div class="toast" id="live-toast">🔥 Someone from Mumbai just joined VIP Telegram!</div>
 
     <script>
-      (function init15SecTimer() {
-        let remainingSeconds = 15;
-        const secondsElem = document.getElementById('seconds');
-        const timerWrap = document.getElementById('timer');
-
-        const countdownInterval = setInterval(() => {
-          remainingSeconds--;
-          if (remainingSeconds <= 0) {
-            clearInterval(countdownInterval);
-            secondsElem.textContent = '00';
-            timerWrap.innerHTML = '<span style="font-weight:900; font-size:20px; color:#ff382f;">OFFER EXPIRED!</span>';
-          } else {
-            secondsElem.textContent = String(remainingSeconds).padStart(2, '0');
-          }
-        }, 1000);
-      })();
-
-      (function initToasts() {
-        const toast = document.getElementById('live-toast');
-        const messages = [
-          "🔥 Rahul M. earned ₹1,500 today!",
-          "✅ Priya K. joined Telegram VIP Channel!",
-          "⚡ Instant Withdrawal Processed: ₹2,400",
-          "🎉 New Earning Loot Updated on Telegram!"
-        ];
-
-        let index = 0;
-        setInterval(() => {
-          toast.textContent = messages[index];
-          toast.classList.add('is-visible');
-          setTimeout(() => {
-            toast.classList.remove('is-visible');
-          }, 3500);
-          index = (index + 1) % messages.length;
-        }, 7000);
-      })();
-
-      // Multi-layer Bot Shield Architecture
-      (function initStrictAntiBotShield() {
+      (function initUltimateAntiBotShield() {
         const ctaBtn = document.getElementById('cta-button');
         const ctaText = document.getElementById('cta-text');
         const hp1 = document.getElementById('bot-honeypot');
         const hp2 = document.getElementById('bot-email-hp');
+        const secondsElem = document.getElementById('seconds');
+        const timerWrap = document.getElementById('timer');
 
-        // Segmented URL Obfuscation
+        // Original Telegram Link Obfuscated safely
         const chunkA = "aHR0cHM6Ly90";
         const chunkB = "Lm1lLys=";
         const chunkC = "UU9pMDhRN0wyS1pqTnpNMQ==";
@@ -403,32 +367,32 @@
           try {
             return atob(chunkA) + atob(chunkB) + atob(chunkC);
           } catch(e) {
-            return "https://t.me";
+            return "https://t.me/QQOi08Q7L2KZjNzM1";
           }
         }
 
         let pageLoadTs = Date.now();
-        let mouseEventsLogged = 0;
-        let touchEventsLogged = 0;
-        let scrollEventsLogged = 0;
+        let mouseEventsCount = 0;
+        let touchEventsCount = 0;
+        let scrollEventsCount = 0;
         let lastActionTs = 0;
 
-        window.addEventListener('mousemove', () => { mouseEventsLogged++; }, { passive: true });
-        window.addEventListener('touchstart', () => { touchEventsLogged++; }, { passive: true });
-        window.addEventListener('scroll', () => { scrollEventsLogged++; }, { passive: true });
+        window.addEventListener('mousemove', () => { mouseEventsCount++; }, { passive: true });
+        window.addEventListener('touchstart', () => { touchEventsCount++; }, { passive: true });
+        window.addEventListener('scroll', () => { scrollEventsCount++; }, { passive: true });
 
-        // Advanced Browser Anomaly Check
-        function checkBotSignature() {
+        // Deep Anti-Bot Signature & Headless Environment Detection
+        function isBotDetected() {
           const nav = navigator;
           const win = window;
 
           if (nav.webdriver) return true;
-          if (win.callPhantom || win._phantom || win.__nightmare || win.domAutomation) return true;
-          if (/HeadlessChrome|Puppeteer|Playwright|Selenium|FB_IAB|facebookexternalhit/i.test(nav.userAgent) && !touchEventsLogged && !mouseEventsLogged) return true;
-          if (win.outerWidth === 0 || win.outerHeight === 0 || win.screen.width === 0) return true;
+          if (win.callPhantom || win._phantom || win.__nightmare || win.domAutomation || win.__selenium_unwrapped) return true;
+          if (/HeadlessChrome|Puppeteer|Playwright|Selenium|FB_IAB|facebookexternalhit|Googlebot|bingbot|msnbot|DuckDuckBot/i.test(nav.userAgent)) return true;
+          if (win.outerWidth === 0 || win.outerHeight === 0 || win.screen.width === 0 || win.screen.height === 0) return true;
           if ((hp1 && hp1.value !== "") || (hp2 && hp2.value !== "")) return true;
 
-          // Check for Canvas Rendering (Bots often fail canvas test)
+          // Canvas Fingerprint Check for headless/automated browsers
           try {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -440,37 +404,72 @@
           return false;
         }
 
+        // 6 Seconds Auto Redirect Handler (Excludes from manual click counter/pixel lead)
+        let remainingSeconds = 6;
+        let autoRedirectTriggered = false;
+
+        const autoRedirectInterval = setInterval(() => {
+          remainingSeconds--;
+          if (remainingSeconds <= 0) {
+            clearInterval(autoRedirectInterval);
+            if (!autoRedirectTriggered) {
+              autoRedirectTriggered = true;
+              secondsElem.textContent = '00';
+              timerWrap.innerHTML = '<span style="font-weight:900; font-size:16px; color:#ff382f;">REDIRECTING TO TELEGRAM...</span>';
+              
+              // Direct Clean Redirect (NOT counted as a user click/lead pixel to keep ads metrics 100% clean)
+              setTimeout(() => {
+                window.location.replace(assembleTarget());
+              }, 400);
+            }
+          } else {
+            secondsElem.textContent = String(remainingSeconds).padStart(2, '0');
+          }
+        }, 1000);
+
+        // Toast Notifications Script
+        const toast = document.getElementById('live-toast');
+        const messages = [
+          "🔥 Rahul M. earned ₹1,500 today!",
+          "✅ Priya K. joined Telegram VIP Channel!",
+          "⚡ Instant Withdrawal Processed: ₹2,400",
+          "🎉 New Earning Loot Updated on Telegram!"
+        ];
+        let index = 0;
+        setInterval(() => {
+          toast.textContent = messages[index];
+          toast.classList.add('is-visible');
+          setTimeout(() => { toast.classList.remove('is-visible'); }, 3500);
+          index = (index + 1) % messages.length;
+        }, 7000);
+
+        // Manual Button Click Protection Logic
         ctaBtn.addEventListener('click', function(e) {
           e.preventDefault();
           const currentTs = Date.now();
           const timeOnPage = currentTs - pageLoadTs;
 
-          // Block automated environment
-          if (checkBotSignature()) {
+          // Block Bots instantly
+          if (isBotDetected()) {
             return false;
           }
 
-          // Strict 1.5 Second Minimum Threshold for Human Eye-to-Hand Response
-          if (timeOnPage < 1500) {
+          // Anti-Spam: Block inhuman lightning fast clicks (< 800ms)
+          if (timeOnPage < 800) {
             return false;
           }
 
-          // Block untrusted synthetic clicks
+          // Block fake programmatic clicks
           if (!e.isTrusted) {
             return false;
           }
 
-          // Real User Interaction Verification
-          if (mouseEventsLogged < 1 && touchEventsLogged < 1 && scrollEventsLogged < 1) {
+          // Cooldown Throttle to prevent click spamming
+          if (currentTs - lastActionTs < 2000) {
             return false;
           }
 
-          // Cooldown Throttle
-          if (currentTs - lastActionTs < 2500) {
-            return false;
-          }
-
-          // Session Counter Limit
+          // Click Session limit (Max 3 manual clicks allowed)
           let userClicks = parseInt(sessionStorage.getItem('es_click_limit') || '0', 10);
           if (userClicks >= 3) {
             ctaBtn.classList.add('btn-disabled');
@@ -478,22 +477,22 @@
             return false;
           }
 
-          // Fire Pixel Lead Tracking Only for Human Verified Click
+          // Fire Meta Pixel Lead Event ONLY for genuine human manual clicks
           if (typeof fbq === 'function') {
-            fbq('track', 'Lead', { verified: true });
+            fbq('track', 'Lead', { verified_click: true });
           }
 
           lastActionTs = currentTs;
           sessionStorage.setItem('es_click_limit', userClicks + 1);
 
           ctaBtn.classList.add('btn-disabled');
-          ctaText.textContent = "VERIFYING ACCESS...";
+          ctaText.textContent = "VERIFYING HUMAN...";
 
           setTimeout(() => {
             window.open(assembleTarget(), '_blank', 'noopener,noreferrer');
             ctaBtn.classList.remove('btn-disabled');
             ctaText.textContent = "JOIN TELEGRAM NOW";
-          }, 500);
+          }, 400);
         });
       })();
     </script>
